@@ -1,7 +1,8 @@
 package com.techelevator.service;
 
-import com.techelevator.Product;
+import com.techelevator.model.catering.Product;
 import com.techelevator.PromptFileReader;
+import com.techelevator.model.catering.ProductShelf;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,12 +12,17 @@ import java.util.Scanner;
 
 public class CateringService {
 
-    private Map<Product, Integer> productInventory;
+    private Map<String, ProductShelf> productInventory;
 
 
     public CateringService() {
         productInventory = new HashMap<>();
         userFilePath();
+    }
+
+
+    public Map<String, ProductShelf> getProductInventory() {
+        return this.productInventory;
     }
 
 
@@ -59,10 +65,22 @@ public class CateringService {
             String[] lineArr = scanner.nextLine().split("\\|");
 
             Product product = new Product(lineArr[0], lineArr[1], Double.parseDouble(lineArr[2]), lineArr[3]);
-            productInventory.put(product, product.INITIAL_PRODUCT_INVENTORY);
+            ProductShelf productShelf = new ProductShelf(product, product.INITIAL_PRODUCT_INVENTORY);
+
+            productInventory.put(lineArr[0], productShelf);
 
         }
 
+    }
+
+
+    //function requires the productCode and the amount to be correct
+    public void removeFromShelf(String productCode, int amount) {
+
+        ProductShelf productShelf = productInventory.get(productCode);
+
+        productShelf.setAmount(productShelf.getAmount() - amount);
+        productInventory.put(productCode, productShelf);
     }
 
 
@@ -77,12 +95,11 @@ public class CateringService {
         );
 
         System.out.println("--------------------------------------------------------------------------------------");
-        for (Product product : productInventory.keySet()) {
+        for (String productCode : productInventory.keySet()) {
 
-            Integer amountRemaining= productInventory.get(product);
-            String amountRemainingStr = (amountRemaining ==0) ? "SOLD OUT" :  amountRemaining.toString();
-
-
+            ProductShelf productShelf = productInventory.get(productCode);
+            String amountRemainingStr = (productShelf.getAmount() == 0) ? "SOLD OUT" : String.valueOf(productShelf.getAmount());
+            Product product = productShelf.getProduct();
 
 
             System.out.printf("%-15s %-23s $%-15.2f %-15s\n",

@@ -1,7 +1,8 @@
 package com.techelevator;
 
-import com.techelevator.Ordering.CustomerAccount;
+import com.techelevator.model.Ordering.CustomerAccount;
 import com.techelevator.service.CateringService;
+import com.techelevator.service.OrderingService;
 import com.techelevator.view.Menu;
 
 /*
@@ -23,7 +24,7 @@ public class CateringSystemCLI {
 	 */
 	private Menu menu;
 	private CateringService cateringService;
-	private CustomerAccount customerAccount;
+	private OrderingService orderingService;
 
 
 	public CateringSystemCLI(Menu menu) {
@@ -41,21 +42,16 @@ public class CateringSystemCLI {
 
 
 
-		//initialize catering service. catering service will ask for a file
+		//initialize all the service and accounts needed
 		cateringService= new CateringService();
+
+		//ordering service needs inventory to work with
+		orderingService = new OrderingService(cateringService);
 
 
 		while (true) {
-			/*
-			Display the Starting Menu and get the users choice.
-			Remember all uses of System.out and System.in should be in the menu
 
-			
-			IF the User Choice is Display Vending Machine Items, 
-				THEN display vending machine items
-			ELSE IF the User's Choice is Purchase,
-				THEN go to the purchase menu
-			*/
+			CustomerAccount customerAccount= orderingService.getCustomerAccount();
 
 			int userChoice= menu.userChoice();
 
@@ -63,15 +59,31 @@ public class CateringSystemCLI {
 				cateringService.inventoryReport();
 
 			}else if(userChoice ==2){
-				menu.purchasingMenu();
+				//
+				int purchaseMenuChoice=menu.purchasingMenu(customerAccount.getBalance());
+
+				if(purchaseMenuChoice==1){
+					int amount= menu.addMoneyOptions();
+
+					while(!customerAccount.addMoney(amount)){
+						amount=menu.addMoneyToAccountPrompt(customerAccount.getBalance());
+					}
+				}else if(purchaseMenuChoice==2){
+					String productToPurchase= menu.selectProductToPurchase();
+					int productAmount=menu.selectProductToPurchaseAmount();
+
+					String orderResponse=orderingService.order(productToPurchase,productAmount);
+
+					menu.printStringMessage(orderResponse);
+				}
+
 
 			}else if(userChoice ==3){
 				break;
 			}
 
 		}
-		customerAccount = new CustomerAccount();
-		customerAccount.addMoney();
+
 	}
 
 	/*
