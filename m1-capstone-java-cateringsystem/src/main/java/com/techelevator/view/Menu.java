@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Menu {
 
-    private static final Scanner in = new Scanner(System.in);
+    private  final Scanner in = new Scanner(System.in);
 
     public void showWelcomeMessage() {
         System.out.println("*************************");
@@ -22,29 +22,30 @@ public class Menu {
 
 
     public int userChoice() {
+        Scanner in = new Scanner(System.in);
         System.out.println();
         System.out.println("(1) Display Catering Items");
         System.out.println("(2) Order");
         System.out.println("(3) Quit");
-        String userChoice = in.nextLine();
-        return Integer.parseInt(userChoice);
+        return  waitForInt();
 
     }
 
     public int purchasingMenu(double balance) {
+        Scanner in = new Scanner(System.in);
         System.out.println();
         System.out.println("(1) Add Money");
         System.out.println("(2) Select Products");
         System.out.println("(3) Complete Transaction");
         System.out.println("Current Account Balance: $" + balance);
-        String userChoice = in.nextLine();
-        return Integer.parseInt(userChoice);
+        return  waitForInt();
     }
 
     public int addMoneyOptions() {
+        Scanner in = new Scanner(System.in);
         System.out.println("Add money amount in whole dollar: $ ");
-        String userChoice = in.nextLine();
-        return Integer.parseInt(userChoice);
+
+        return  waitForInt();
 
     }
 
@@ -66,12 +67,24 @@ public class Menu {
 
     public int selectProductToPurchaseAmount() {
         System.out.println("How much of the product you would like to add to cart: ");
-        String userChoice = in.nextLine();
-        return Integer.parseInt(userChoice);
+        return waitForInt();
     }
 
     public void printStringMessage(String message) {
         System.out.println(message);
+    }
+
+    public int waitForInt(){
+        int userInt=0;
+        Scanner in= new Scanner(System.in);
+        while (!in.hasNextInt()){
+           in.next();
+        }
+        userInt=in.nextInt();
+
+        return  userInt;
+
+
     }
 
 

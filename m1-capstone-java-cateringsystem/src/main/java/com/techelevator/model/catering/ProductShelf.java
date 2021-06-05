@@ -1,15 +1,13 @@
 package com.techelevator.model.catering;
 
-import com.techelevator.model.catering.Product;
-
 public class ProductShelf {
 
     private Product product;
-    private int amount;
+    private int numOfProducts;
 
-    public ProductShelf(Product product, int amount) {
+    public ProductShelf(Product product, int numOfProducts) {
         this.product = product;
-        this.amount = amount;
+        this.numOfProducts = numOfProducts;
     }
 
     public Product getProduct() {
@@ -20,11 +18,11 @@ public class ProductShelf {
         this.product = product;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getNumOfProducts() {
+        return numOfProducts;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setNumOfProducts(int numOfProducts) {
+        this.numOfProducts = numOfProducts;
     }
 }

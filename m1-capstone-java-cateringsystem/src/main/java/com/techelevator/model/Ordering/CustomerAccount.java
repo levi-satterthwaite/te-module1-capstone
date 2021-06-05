@@ -21,7 +21,7 @@ public class CustomerAccount {
      * true is money can be added false otherwise
      */
 
-    public boolean addMoney(int amount) {
+    public boolean updateBalance(double amount) {
         boolean moneyAdded=false;
 
        if((amount+balance<=MAX_BALANCE_LIMIT)){
@@ -31,8 +31,9 @@ public class CustomerAccount {
 
        return moneyAdded;
 
-
     }
+
+
 
 
 

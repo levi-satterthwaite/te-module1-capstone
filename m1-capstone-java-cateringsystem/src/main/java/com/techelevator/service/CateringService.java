@@ -25,7 +25,6 @@ public class CateringService {
         return this.productInventory;
     }
 
-
     /**
      * prompts the user for a correct file path containing the items
      */
@@ -79,7 +78,7 @@ public class CateringService {
 
         ProductShelf productShelf = productInventory.get(productCode);
 
-        productShelf.setAmount(productShelf.getAmount() - amount);
+        productShelf.setNumOfProducts(productShelf.getNumOfProducts() - amount);
         productInventory.put(productCode, productShelf);
     }
 
@@ -98,7 +97,7 @@ public class CateringService {
         for (String productCode : productInventory.keySet()) {
 
             ProductShelf productShelf = productInventory.get(productCode);
-            String amountRemainingStr = (productShelf.getAmount() == 0) ? "SOLD OUT" : String.valueOf(productShelf.getAmount());
+            String amountRemainingStr = (productShelf.getNumOfProducts() == 0) ? "SOLD OUT" : String.valueOf(productShelf.getNumOfProducts());
             Product product = productShelf.getProduct();
 
 
