@@ -5,6 +5,8 @@ import com.techelevator.service.CateringService;
 import com.techelevator.service.OrderingService;
 import com.techelevator.view.Menu;
 
+import java.util.Map;
+
 /*
  * This class should control the workflow of the application, but not do any other work
  *
@@ -47,8 +49,6 @@ public class CateringSystemCLI {
         //ordering service needs inventory to work with
         orderingService = new OrderingService(cateringService);
 
-       System.out.println( orderingService.getChange(new  Double[]{.50,.25,.10,.5,0.01},.65).toString());
-
 
         while (true) {
 
@@ -82,6 +82,7 @@ public class CateringSystemCLI {
                     menu.printStringMessage(orderResponse);
                 } else if (purchaseMenuChoice == 3) {
                     orderingService.completeTransaction();
+
                 }
 
 

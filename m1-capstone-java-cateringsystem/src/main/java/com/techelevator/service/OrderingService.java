@@ -106,6 +106,25 @@ public class OrderingService {
         }
         System.out.println("Total: " + totalAmount);
 
+
+        //give back the user his change
+        System.out.println("\n");
+
+        final Double[] BILLS = { 50.00, 20.00, 10.00, 100.00, 5.00, 1.00};
+        final Double [] COINS={0.5,0.25,0.1,0.05,0.01};
+
+        double customerChangeDollar = (int) customerAccount.getBalance();
+        double customerChangeCent = (customerAccount.getBalance() - customerChangeDollar);
+
+        Map<Double,Integer> dollarChange = getChange(BILLS,customerChangeDollar);
+        Map<Double,Integer> centChange =  getChange(COINS,customerChangeCent);
+
+        System.out.println("Your change is " + dollarChange + " dollars and " + centChange + " cents");
+
+
+        //make user balance go to zero
+        customerAccount.updateBalance(-1* customerAccount.getBalance());
+
     }
     public CustomerAccount getCustomerAccount() {
         return customerAccount;
@@ -114,7 +133,8 @@ public class OrderingService {
     //giving the smallest amount of change
 
 
-    public Map<Double,Integer> getChange(Double [] changeDrawer, Double moneyToChange){
+    private Map<Double,Integer> getChange(Double [] changeDrawer, Double moneyToChange){
+
 
         //need to sort the change drawer in dec. order
         Arrays.sort(changeDrawer, Collections.reverseOrder());
@@ -141,8 +161,10 @@ public class OrderingService {
         }
         return changeToGive;
 
-
     }
+
+
+
 
 
 }
