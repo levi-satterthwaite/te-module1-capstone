@@ -6,9 +6,28 @@ import com.techelevator.model.Ordering.CustomerAccount;
 import com.techelevator.model.catering.Product;
 import com.techelevator.model.catering.ProductShelf;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class OrderingService {
+    /*
+    Function of this class:
+    Access CustomerAccount
+     -decide if user can purchase
+
+     Access CateringService
+     -Manage if the product is available in catering inventory
+
+
+     Access Cart
+
+
+
+
+     */
+
 
     private final CustomerAccount customerAccount;
 
@@ -24,11 +43,7 @@ public class OrderingService {
 
     }
 
-    /**
-     * orders a product from inventory. returns an
-     * @return
-     *  {a message indication the status of order}
-     */
+
     public String order(String productCode,int amount){
         Map<String,ProductShelf> inventory= cateringService.getProductInventory();
 
@@ -94,6 +109,39 @@ public class OrderingService {
     }
     public CustomerAccount getCustomerAccount() {
         return customerAccount;
+    }
+
+    //giving the smallest amount of change
+
+
+    public Map<Double,Integer> getChange(Double [] changeDrawer, Double moneyToChange){
+
+        //need to sort the change drawer in dec. order
+        Arrays.sort(changeDrawer, Collections.reverseOrder());
+
+        //initialize our Map that will contains the changes and their count
+        Map<Double,Integer> changeToGive= new HashMap<>();
+
+        for(int i=0;i<changeDrawer.length;i++){
+            if(changeDrawer[i]<=moneyToChange){
+
+                 int billCount=0;
+
+                if(changeToGive.containsKey(changeDrawer[i])){
+                    billCount= changeToGive.get(changeDrawer[i]);
+                }
+                changeToGive.put(changeDrawer[i], billCount+1);
+                moneyToChange=moneyToChange-changeDrawer[i];
+                if(moneyToChange>=changeDrawer[i]){
+                    i--;
+                }
+
+            }
+
+        }
+        return changeToGive;
+
+
     }
 
 

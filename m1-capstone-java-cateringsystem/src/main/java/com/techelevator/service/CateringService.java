@@ -11,6 +11,19 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class CateringService {
+    /*
+    This class must handle inventory of the items in the menu (construct inventoryReport)
+    inventoryReport contains: productCode, purchasePrice, amountRemaining (initially 50) or Sold OUt!
+     How?
+     -access product containing the attributes we need--build a map
+     - create a map: Key-productCode
+                     Value-Product
+
+     -Needs access to file! It must use the file path users provide and the file reader (which returns file)
+    It must use the file and create a ArrayList using the Product class
+
+
+     */
 
     private Map<String, ProductShelf> productInventory;
 
@@ -25,8 +38,8 @@ public class CateringService {
         return this.productInventory;
     }
 
-    /**
-     * prompts the user for a correct file path containing the items
+    /*
+
      */
     private void userFilePath() {
 
@@ -73,12 +86,12 @@ public class CateringService {
     }
 
 
-    //function requires the productCode and the amount to be correct
-    public void removeFromShelf(String productCode, int amount) {
+    //function requires the productCode and the amount remaining to be correct
+    public void removeFromShelf(String productCode, int amountRemoved) {
 
         ProductShelf productShelf = productInventory.get(productCode);
 
-        productShelf.setNumOfProducts(productShelf.getNumOfProducts() - amount);
+        productShelf.setNumOfProducts(productShelf.getNumOfProducts() - amountRemoved);
         productInventory.put(productCode, productShelf);
     }
 

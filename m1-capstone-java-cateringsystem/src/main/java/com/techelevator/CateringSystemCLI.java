@@ -47,6 +47,8 @@ public class CateringSystemCLI {
         //ordering service needs inventory to work with
         orderingService = new OrderingService(cateringService);
 
+       System.out.println( orderingService.getChange(new  Double[]{.50,.25,.10,.5,0.01},.65).toString());
+
 
         while (true) {
 
