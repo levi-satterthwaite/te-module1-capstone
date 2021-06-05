@@ -119,6 +119,9 @@ public class OrderingService {
         Map<Double,Integer> dollarChange = getChange(BILLS,customerChangeDollar);
         Map<Double,Integer> centChange =  getChange(COINS,customerChangeCent);
 
+        for (Double totalDollarNotes : dollarChange)
+
+
         System.out.println("Your change is " + dollarChange + " dollars and " + centChange + " cents");
 
 
@@ -139,7 +142,7 @@ public class OrderingService {
         //need to sort the change drawer in dec. order
         Arrays.sort(changeDrawer, Collections.reverseOrder());
 
-        //initialize our Map that will contains the changes and their count
+        //initialize our Map that will contain the changes and their count
         Map<Double,Integer> changeToGive= new HashMap<>();
 
         for(int i=0;i<changeDrawer.length;i++){
