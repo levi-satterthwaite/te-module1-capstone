@@ -1,4 +1,4 @@
-package com.techelevator.modeling.catering;
+package com.techelevator.model.catering;
 
 public class ProductShelf {
 

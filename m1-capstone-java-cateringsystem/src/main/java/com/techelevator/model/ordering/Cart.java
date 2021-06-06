@@ -1,4 +1,4 @@
-package com.techelevator.modeling.ordering;
+package com.techelevator.model.ordering;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +21,10 @@ public class Cart {
         }
 
         cartItems.put(productCode, amount);
+
+
+
+
 
 
     }
