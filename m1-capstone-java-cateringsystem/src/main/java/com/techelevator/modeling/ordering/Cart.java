@@ -1,4 +1,4 @@
-package com.techelevator.model.Ordering;
+package com.techelevator.modeling.ordering;
 
 import java.util.HashMap;
 import java.util.Map;

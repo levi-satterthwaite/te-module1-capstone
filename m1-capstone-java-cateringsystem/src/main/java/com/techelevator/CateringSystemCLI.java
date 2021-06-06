@@ -1,11 +1,9 @@
 package com.techelevator;
 
-import com.techelevator.model.Ordering.CustomerAccount;
+import com.techelevator.modeling.ordering.CustomerAccount;
 import com.techelevator.service.CateringService;
 import com.techelevator.service.OrderingService;
 import com.techelevator.view.Menu;
-
-import java.util.Map;
 
 /*
  * This class should control the workflow of the application, but not do any other work

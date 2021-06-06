@@ -1,10 +1,10 @@
 package com.techelevator.service;
 
 
-import com.techelevator.model.Ordering.Cart;
-import com.techelevator.model.Ordering.CustomerAccount;
-import com.techelevator.model.catering.Product;
-import com.techelevator.model.catering.ProductShelf;
+import com.techelevator.modeling.ordering.Cart;
+import com.techelevator.modeling.ordering.CustomerAccount;
+import com.techelevator.modeling.catering.Product;
+import com.techelevator.modeling.catering.ProductShelf;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,8 +1,8 @@
 package com.techelevator.service;
 
-import com.techelevator.model.catering.Product;
+import com.techelevator.modeling.catering.Product;
 import com.techelevator.PromptFileReader;
-import com.techelevator.model.catering.ProductShelf;
+import com.techelevator.modeling.catering.ProductShelf;
 
 import java.io.File;
 import java.io.FileNotFoundException;
