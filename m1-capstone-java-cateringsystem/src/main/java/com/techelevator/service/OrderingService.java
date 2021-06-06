@@ -1,17 +1,19 @@
 package com.techelevator.service;
 
 
+import com.techelevator.AuditSystem.TimeStamp;
 import com.techelevator.model.Ordering.Cart;
 import com.techelevator.model.Ordering.CustomerAccount;
 import com.techelevator.model.catering.Product;
 import com.techelevator.model.catering.ProductShelf;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderingService {
+public class OrderingService implements TimeStamp {
     /*
     Function of this class:
     Access CustomerAccount
@@ -28,18 +30,25 @@ public class OrderingService {
 
      */
 
-
     private final CustomerAccount customerAccount;
 
    private final CateringService cateringService;
 
     private final Cart cart;
 
+    protected String addToCartTimestamp;
+
+
+
+
 
     public OrderingService(CateringService cateringService) {
         this.cateringService = cateringService;
         customerAccount= new CustomerAccount();
         cart= new Cart();
+        this.addToCartTimestamp = "";
+
+
 
     }
 
@@ -74,9 +83,17 @@ public class OrderingService {
 
         cart.addToCart(productCode,amount);
 
+        addToCartTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
+
+
+
         return "Successfully added to cart! :)";
 
+
+
     }
+
+
 
     public void completeTransaction(){
         Map<String,Integer> cartItems= cart.getCartItems();
@@ -119,10 +136,11 @@ public class OrderingService {
         Map<Double,Integer> dollarChange = getChange(BILLS,customerChangeDollar);
         Map<Double,Integer> centChange =  getChange(COINS,customerChangeCent);
 
-        for (Double totalDollarNotes : dollarChange)
+
 
 
         System.out.println("Your change is " + dollarChange + " dollars and " + centChange + " cents");
+       String giveChangeTimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
 
 
         //make user balance go to zero
@@ -166,8 +184,8 @@ public class OrderingService {
 
     }
 
-
-
-
-
+    @Override
+    public String timeStamp() {
+        return addToCartTimestamp;
+    }
 }

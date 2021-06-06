@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.AuditSystem.Audit;
 import com.techelevator.model.Ordering.CustomerAccount;
 import com.techelevator.service.CateringService;
 import com.techelevator.service.OrderingService;
@@ -22,11 +23,12 @@ public class CateringSystemCLI {
      * It is the only class instantiated in the starter code.
      * You will need to instantiate all other classes using the new keyword before you can use them.
      *
-     * Remember every class and data structure is a data types and can be passed as arguments to methods or constructors.
+     * Every class and data structure is a data types and can be passed as arguments to methods or constructors.
      */
     private Menu menu;
     private CateringService cateringService;
     private OrderingService orderingService;
+   // private Audit audit;
 
 
     public CateringSystemCLI(Menu menu) {
@@ -46,8 +48,10 @@ public class CateringSystemCLI {
         //initialize all the service and accounts needed
         cateringService = new CateringService();
 
+
         //ordering service needs inventory to work with
         orderingService = new OrderingService(cateringService);
+
 
 
         while (true) {
@@ -58,6 +62,7 @@ public class CateringSystemCLI {
 
             if (userChoice == 1) {
                 cateringService.inventoryReport();
+
 
             } else if (userChoice == 2) {
                 //order  menu
