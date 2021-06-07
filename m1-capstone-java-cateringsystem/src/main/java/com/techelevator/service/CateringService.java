@@ -41,6 +41,8 @@ public class CateringService {
     /*
 
      */
+
+    //create a method that gets userPath and gives a ray
     private void userFilePath() {
 
         Scanner in = new Scanner(System.in);
@@ -52,6 +54,7 @@ public class CateringService {
         //system exception, deal with it here
 
         try {
+            //if it works
             mapFileToItems(fileReader.getFile());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -106,7 +109,7 @@ public class CateringService {
                 "Amount Remaining"
         );
 
-        System.out.println("--------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------");
         for (String productCode : productInventory.keySet()) {
 
             ProductShelf productShelf = productInventory.get(productCode);

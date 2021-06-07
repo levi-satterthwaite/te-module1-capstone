@@ -1,6 +1,6 @@
 package com.techelevator.service;
 
-import com.techelevator.AuditSystem.TimeStamp;
+import com.techelevator.AuditSystem.Audit;
 import com.techelevator.model.catering.Product;
 import com.techelevator.model.catering.ProductShelf;
 import com.techelevator.model.ordering.Cart;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderingService implements TimeStamp {
+public class OrderingService {
     /*
     Function of this class:
     Access CustomerAccount
@@ -35,18 +35,19 @@ public class OrderingService implements TimeStamp {
 
     private final Cart cart;
 
-    protected String addToCartTimestamp;
+    private  final  Audit audit;
 
 
 
 
 
-    public OrderingService(CateringService cateringService) {
+
+
+    public OrderingService(CateringService cateringService, Audit audit) {
         this.cateringService = cateringService;
-        customerAccount= new CustomerAccount();
+        customerAccount= new CustomerAccount(audit);
         cart= new Cart();
-        this.addToCartTimestamp = "";
-
+        this.audit= audit;
 
 
     }
@@ -80,10 +81,9 @@ public class OrderingService implements TimeStamp {
         //there must be enough
         cateringService.removeFromShelf(productCode,amount);
 
-        cart.addToCart(productCode,amount);
+         cart.addToCart(productCode,amount);
 
-        addToCartTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
-
+        String addToCartTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
 
 
         return "Successfully added to cart! :)";
@@ -91,8 +91,6 @@ public class OrderingService implements TimeStamp {
 
 
     }
-
-
 
     public void completeTransaction(){
         Map<String,Integer> cartItems= cart.getCartItems();
@@ -108,15 +106,22 @@ public class OrderingService implements TimeStamp {
             Double productPrice = product.getProductPrice();
             Double tolCostPerProduct = numOfProduct * productPrice;
 
-            System.out.printf("%-10s %-15s %-23s %-15.2f %-15.2f\n",
+
+
+            System.out.printf("%-10s %-15s %-23s $%-15.2f $%-15.2f\n",
                     numOfProduct,
                     productType,
                     productName,
                     productPrice,
                     tolCostPerProduct);
 
+            System.out.println("");
+
 
             totalAmount+=tolCostPerProduct;
+
+            audit.addToLog(numOfProduct + " " + productName + " " + productCode
+                    + " "+ totalAmount + " " + customerAccount.getBalance());
 
 
         }
@@ -129,6 +134,8 @@ public class OrderingService implements TimeStamp {
         final Double[] BILLS = { 50.00, 20.00, 10.00, 100.00, 5.00, 1.00};
         final Double [] COINS={0.5,0.25,0.1,0.05,0.01};
 
+        double balanceBeforeChange = customerAccount.getBalance();
+
         double customerChangeDollar = (int) customerAccount.getBalance();
         double customerChangeCent = (customerAccount.getBalance() - customerChangeDollar);
 
@@ -136,14 +143,13 @@ public class OrderingService implements TimeStamp {
         Map<Double,Integer> centChange =  getChange(COINS,customerChangeCent);
 
 
-
-
         System.out.println("Your change is " + dollarChange + " dollars and " + centChange + " cents");
-       String giveChangeTimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(System.currentTimeMillis());
 
 
         //make user balance go to zero
         customerAccount.updateBalance(-1* customerAccount.getBalance());
+
+        audit.addToLog("GIVE CHANGE: " + balanceBeforeChange + " " + customerAccount.getBalance());
 
     }
     public CustomerAccount getCustomerAccount() {
@@ -183,8 +189,5 @@ public class OrderingService implements TimeStamp {
 
     }
 
-    @Override
-    public String timeStamp() {
-        return addToCartTimestamp;
-    }
+
 }

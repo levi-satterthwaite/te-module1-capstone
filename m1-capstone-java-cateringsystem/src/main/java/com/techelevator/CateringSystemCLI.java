@@ -1,10 +1,10 @@
 package com.techelevator;
 
-<<<<<<< HEAD
+
+import com.techelevator.AuditSystem.Audit;
 import com.techelevator.model.ordering.CustomerAccount;
-=======
-import com.techelevator.model.Ordering.CustomerAccount;
->>>>>>> 310f137652450fcd1c2fed3a207c877dfeba90b6
+
+//import com.techelevator.model.Ordering.CustomerAccount;
 import com.techelevator.service.CateringService;
 import com.techelevator.service.OrderingService;
 import com.techelevator.view.Menu;
@@ -22,14 +22,14 @@ public class CateringSystemCLI {
     /*
      * The menu class is instantiated in the main() method at the bottom of this file.
      * It is the only class instantiated in the starter code.
-     * You will need to instantiate all other classes using the new keyword before you can use them.
+     *  We need to instantiate all other classes using the new keyword before we can use them.
      *
      * Every class and data structure is a data types and can be passed as arguments to methods or constructors.
      */
     private Menu menu;
     private CateringService cateringService;
     private OrderingService orderingService;
-   // private Audit audit;
+    private Audit audit;
 
 
     public CateringSystemCLI(Menu menu) {
@@ -49,10 +49,11 @@ public class CateringSystemCLI {
         //initialize all the service and accounts needed
         cateringService = new CateringService();
 
+        //initialize Audit for logging service
+        audit= new Audit();
 
-        //ordering service needs inventory to work with
-        orderingService = new OrderingService(cateringService);
-
+        //ordering service needs inventory to work with so pass cateringService into ordering service
+        orderingService = new OrderingService(cateringService,audit);
 
 
         while (true) {
@@ -87,7 +88,11 @@ public class CateringSystemCLI {
 
                     menu.printStringMessage(orderResponse);
                 } else if (purchaseMenuChoice == 3) {
+                    System.out.println("\n");
                     orderingService.completeTransaction();
+
+                    //write log file
+                    audit.writeLogToFile();
 
                 }
 
