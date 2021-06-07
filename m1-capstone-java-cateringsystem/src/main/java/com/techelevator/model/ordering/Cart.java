@@ -8,7 +8,9 @@ public class Cart {
 
     private final Map<String, Integer> cartItems;
 
-
+    /*
+    This class is a container that gives two methods - add items to cart and remove items to cart
+     */
     public Cart() {
         cartItems = new HashMap<>();
 
@@ -21,11 +23,6 @@ public class Cart {
         }
 
         cartItems.put(productCode, amount);
-
-
-
-
-
 
     }
 

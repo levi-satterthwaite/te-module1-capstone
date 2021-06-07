@@ -14,7 +14,7 @@ import com.techelevator.view.Menu;
  *
  * The menu class should communicate with the user, but do no other work
  *
- * The work of the Catering System should be in other classes that you build and
+ * The work of the Catering System should be in other classes that we build and
  * call from here.
  */
 public class CateringSystemCLI {
